@@ -1,0 +1,59 @@
+﻿@page "{pageNumber=1}"
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(m => Model.ItemsPage.Items[0].Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(m => Model.ItemsPage.Items[0].Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(m => Model.ItemsPage.Items[0].PublicationDate)
+        </th>
+        <th>
+            Actions
+        </th>
+    </tr>
+    @foreach (var item in Model.ItemsPage.Items)
+    {
+        <tr>
+            <th>
+                @item.Title
+            </th>
+            <th>
+                @item.Price
+            </th>
+            <th>
+                @item.PublicationDate
+            </th>
+            <th>
+                <a asp-page="/Details" asp-route-id="@item.Id">
+                    <button type="button" class="btn btn-success">
+                        Details
+                    </button>
+                </a>
+            </th>
+        </tr>
+    }
+</table>
+@if(Model.ItemsPage.PreviousPageAvailable)
+{
+    <a asp-page="/Index" asp-route-pageNumber="@Model.PreviousPageNumber" asp-route-PageCount="@Model.PageCount">
+        <button type="button" class="btn btn-success">
+            Prevoius page
+        </button>
+    </a>
+}
+@if(Model.ItemsPage.NextPageAvailable)
+{
+    <a asp-page="/Index" asp-route-pageNumber="@Model.NextPageNumber" asp-route-PageCount="@Model.PageCount">
+        <button type="button" class="btn btn-success">
+            Next page
+        </button>
+    </a>
+}
