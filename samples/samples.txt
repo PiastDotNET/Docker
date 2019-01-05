@@ -1,0 +1,54 @@
+Wyswietlenie obrazów:
+docker image ls lub docker images
+
+Wyswietlenie działających kontenerów:
+docker ps
+
+Wyswietlenie wszystkich kontenerów:
+docker ps -a
+
+Wyswietlenie volumes:
+docker volume ls
+
+Uruchomienie przykładowego serwera nginx na porcie 5000:
+docker run -d -p 5000:80 nginx:1.14
+
+Uruchomienie bazy danych mssql:
+docker run -d -p 1433:1433 mssql:2017-CU8-ubuntu
+
+Stworzenie volume i podpięcie go do obrazu:
+docker volume create --name storage
+docker run -d -p 5000:80 -v storage:/var/www/html/data --name cloud1 nextcloud:14
+
+Po uruchomieniu drugiego kontenera podpiętego do tego samego volume mamy te same dane tu i tu:
+docker run -d -p 5001:80 -v storage:/var/www/html/data --name cloud2 nextcloud:14
+
+Zabicie kontenera:
+docker kill cloud1
+
+Usunięcie kontenera:
+docker rm cloud1
+
+Usunięcie obrazu:
+docker rmi nextcloud
+
+Usunięcie volume:
+docker volume rm storage
+
+Stworzenie sieci:
+docker network create piast-net
+
+Wyswietlenie sieci:
+docker network ls
+
+Stworzenie obrazu podpiętego do sieci:
+docker run -d --network piast-net --network-alias www nginx:1.14
+
+Stworzenie kontenera w trybie interactive:
+docker run -it --name wirt ubuntu:16.04 
+
+Przyłączenie kontenera do sieci:
+docker network connect piast-net wirt
+
+Usunięcie sieci:
+docker network rm piast-net
